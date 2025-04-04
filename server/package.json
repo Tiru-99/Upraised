@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/index.ts",
-    "build":"tsc"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -26,7 +26,8 @@
     "redis": "^4.7.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2",
-    "winston": "^3.17.0"
+    "winston": "^3.17.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

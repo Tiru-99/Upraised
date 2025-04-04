@@ -6,9 +6,7 @@ import { GadgetType } from "../utils/types";
 import logger from "../utils/logger";
 import { GadgetStatus } from "@prisma/client";
 
-
-//TODO 
-// post a gadget
+// add a gadget
 export const addGadget = async (req: Request, res: Response) => {
     logger.info("/add-gadget route hit !")
     const randomGadgetCodeName = gadgetsCodeName[Math.floor(Math.random() * gadgetsCodeName.length)];
@@ -27,7 +25,7 @@ export const addGadget = async (req: Request, res: Response) => {
                 status: "AVAILABLE"
             }
         });
-
+        //delete the pre-exisiting cache
         await client.del("gadgets");
         logger.info("Gadget inserted successfully! ")
 
@@ -45,6 +43,7 @@ export const addGadget = async (req: Request, res: Response) => {
     }
 }
 
+//retrieve all gadgets
 export const retrieveGadgets = async (req: Request, res: Response) => {
     logger.info("/get-gadgets route hit !");
     try {
@@ -79,6 +78,7 @@ export const retrieveGadgets = async (req: Request, res: Response) => {
     }
 };
 
+//update gadget by id param 
 export const updateGadget = async (req: Request, res: Response) => {
     logger.info("/update-gadget route hit !")
     try {
@@ -109,7 +109,7 @@ export const updateGadget = async (req: Request, res: Response) => {
             where: { id },
             data: updateData
         });
-
+        //delete existing database key
         await client.del("gadgets");
         logger.info("Gadget updated successfully");
 
@@ -181,46 +181,58 @@ const generateConfirmationCode = (length: number) => {
 }
 
 export const handleSelfDestruct = async (req: Request, res: Response) => {
-    const expectedCode = generateConfirmationCode(6);
-
     const { id } = req.params;
-    const { code } = req.body;
-
+    const code = generateConfirmationCode(6);
+  
     if (!code || !id) {
-        logger.warn("Either code or the id is missing");
-        return;
+      logger.warn("Either code or the id is missing");
+      res.status(400).send({ message: "Missing code or id" });
+      return; 
     }
-
-    if (expectedCode != code) {
-        logger.error("Incorrect Confirmation Code !")
-        res.status(403).send({
-            message: "Incorrect Confirmation Code",
-            correctCode: `The correct code was ${expectedCode}`
-        });
-        return;
-    }
-
+  
     try {
-        const gadget = await prisma.gadget.update({
-            where: { id },
-            data: {
-                status: "DESTROYED"
-            }
-        })
-        logger.info("Self Destruction Completed !");
+      const gadget = await prisma.gadget.findUnique({
+        where: { id },
+      });
+  
+      if (!gadget) {
+        logger.warn(`Gadget with id ${id} not found`);
+        res.status(404).send({ message: "Gadget not found" });
+        return; 
+      }
+  
+      if (gadget.status === "DESTROYED") {
+        logger.info("Gadget is already destroyed");
         res.status(200).send({
-            message: "Self Destruction Completed !",
-            gadget: gadget
-        })
-    } catch (error) {
-        logger.error("Something went wrong while self destructing");
-        res.status(500).send({
-            message: "Something went wrong while self destruction",
-            error: error
+          message: "Gadget is already destroyed",
+          gadget,
         });
+        return ;
+      }
+  
+      const updatedGadget = await prisma.gadget.update({
+        where: { id },
+        data: {
+          status: "DESTROYED",
+        },
+      });
+  
+      logger.info("Self Destruction Completed!");
+      res.status(200).send({
+        message: "Self Destruction Completed!",
+        gadget: updatedGadget,
+        confirmation_code: code,
+      });
+  
+    } catch (error) {
+      logger.error("Something went wrong while self destructing", error);
+      res.status(500).send({
+        message: "Something went wrong during self destruction",
+        error,
+      });
     }
-}
-
+  };
+  
 export const filterGadgetsByStatus = async (req: Request, res: Response) => {
     logger.info("/gadgets/filter route hit!");
 

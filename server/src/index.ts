@@ -18,6 +18,7 @@ app.use(express.static("public"))
 //to compress api requests
 app.use(compression());
 app.use(cookieParser())
+//rate limiter
 app.use(rateLimiter);
 
 

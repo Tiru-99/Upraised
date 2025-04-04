@@ -1,5 +1,6 @@
 import rateLimit from "express-rate-limit";
 
+//rate limiting middleware
 const rateLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, 
     max: 100, 

@@ -7,19 +7,14 @@ import logger from "../utils/logger";
 
 export const handleSignUp = async(req :Request , res:Response) => {
     logger.info("/sign up route hit !");
-    const{ username , email , password} = req.body ; 
-
-    console.log("username , passowrd , email is " , username  , email , password);
+    const{ username , email , password} = req.body ;
 
     if(!username || !email || !password){
-        console.log("The code is coming here 1")
-        console.error("Incomplete user Details!");
         logger.warn("Incomplete user details in signup route")
         return ; 
     }
 
    try {
-    console.log("The code is coming here 2")
      const userExists = await prisma.user.findFirst({
          where: {
            OR: [
@@ -94,7 +89,6 @@ export const handleLogin = async(req : Request , res: Response) => {
           });
           return; 
       }
-  
       const comparePassword = await bcrypt.compare(password , existingUser?.password);
   
       if(!comparePassword){
@@ -104,15 +98,11 @@ export const handleLogin = async(req : Request , res: Response) => {
           });
           return ; 
       }
-  
       const jwtToken = jwt.sign({id : existingUser.id} , process.env.JWT_SECRET!);
-      
-      //add jwt expiry here 
       const options = {
           httpOnly : true , 
           secure : true 
       }
-  
       res.status(200)
       .cookie("jwtToken" , jwtToken , options)
       .send({

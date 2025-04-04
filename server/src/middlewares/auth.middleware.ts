@@ -9,7 +9,7 @@ interface CustomJwt extends JwtPayload {
 }
 
 export const verifyJWT = async(req : Request , res : Response , next : NextFunction) => {
-    
+    //splitting the bearer token
     const token = req.header("Authorization")?.split(" ")[1] || req.cookies.jwtToken;
 
     if(!token){
