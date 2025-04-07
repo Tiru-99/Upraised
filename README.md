@@ -35,6 +35,10 @@ This is my submission for the **Phoenix IMF Gadget API Challenge**. It is a full
 
 🧾 [Click here to view the full Postman documentation](https://documenter.getpostman.com/view/28016254/2sB2cUAhiM)  
 
+### 🔧 Environment Variables
+
+Create a `.env` file in the root directory of the project.  
+You can refer to the `.env.sample` file for all the required environment variables and their expected format.
 
 ## ⚙️ Getting Started
 
