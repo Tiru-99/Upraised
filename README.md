@@ -29,7 +29,7 @@ This is my submission for the **Phoenix IMF Gadget API Challenge**. It is a full
 
 ## 🌐 Live API
 
-👉 [Live API Link](https://upraised-production.up.railway.app)  
+👉 [Live API Link](https://upraised-production.up.railway.app/health)  
 
 ## 📮 Postman Documentation
 
@@ -42,6 +42,15 @@ Follow the steps below to set up and run this project locally.
 
 ### 1. Clone the repository
 
-```bash
-git clone https://github.com/<your-username>/phoenix-imf-gadget-api.git
-cd phoenix-imf-gadget-api
+# Clone the repository from GitHub
+git clone https://github.com/Tiru-99/Upraised
+
+# Navigate into the server directory
+cd server
+
+# Install all project dependencies
+npm install
+
+# Start the development server
+npm run dev
+
