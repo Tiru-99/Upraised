@@ -126,7 +126,7 @@ export const updateGadget = async (req: Request, res: Response) => {
     }
 }
 
-
+//delete gadget functionality
 export const deleteGadget = async (req: Request, res: Response) => {
     logger.info("/delete-gadget route hit ! ")
     try {
@@ -180,6 +180,7 @@ const generateConfirmationCode = (length: number) => {
     return code;
 }
 
+//self destruct sequence
 export const handleSelfDestruct = async (req: Request, res: Response) => {
     const { id } = req.params;
     const code = generateConfirmationCode(6);
@@ -233,6 +234,7 @@ export const handleSelfDestruct = async (req: Request, res: Response) => {
     }
   };
   
+  //filter gadgets by Status
 export const filterGadgetsByStatus = async (req: Request, res: Response) => {
     logger.info("/gadgets/filter route hit!");
 

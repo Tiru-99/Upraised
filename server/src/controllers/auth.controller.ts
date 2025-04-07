@@ -4,7 +4,7 @@ import prisma from "../utils/prisma";
 import jwt from 'jsonwebtoken'
 import logger from "../utils/logger";
 
-
+//Sign up handler
 export const handleSignUp = async(req :Request , res:Response) => {
     logger.info("/sign up route hit !");
     const{ username , email , password} = req.body ;
@@ -65,7 +65,7 @@ export const handleSignUp = async(req :Request , res:Response) => {
     }
 }
 
-
+//login handler
 export const handleLogin = async(req : Request , res: Response) => {
     logger.info("login route hit !")
     const {email , password} = req.body ;
@@ -120,7 +120,7 @@ export const handleLogin = async(req : Request , res: Response) => {
   }
 }
 
-
+//logout handler
 export const logout = (req: Request, res: Response) => {
     logger.info("logout route hit !")
     res.clearCookie("jwtToken", {
