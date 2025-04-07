@@ -29,11 +29,11 @@ This is my submission for the **Phoenix IMF Gadget API Challenge**. It is a full
 
 ## 🌐 Live API
 
-👉 [Live API Link]((https://upraised-production.up.railway.app))  
+👉 [Live API Link](https://upraised-production.up.railway.app)  
 
 ## 📮 Postman Documentation
 
-🧾 [Click here to view the full Postman documentation]((https://documenter.getpostman.com/view/28016254/2sB2cUAhiM))  
+🧾 [Click here to view the full Postman documentation](https://documenter.getpostman.com/view/28016254/2sB2cUAhiM)  
 
 
 ## ⚙️ Getting Started
