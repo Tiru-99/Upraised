@@ -40,7 +40,6 @@ This is my submission for the **Phoenix IMF Gadget API Challenge**. It is a full
 
 Follow the steps below to set up and run this project locally.
 
-### 1. Clone the repository
 ```bash
 # Clone the repository from GitHub
 git clone https://github.com/Tiru-99/Upraised
